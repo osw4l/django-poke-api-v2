@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Pokemon</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://pokeapi.co/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+          integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <style>
+        body {
+            background-color: #3761a8;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-4 offset-md-4">
+            <form method="post" action>{% csrf_token %}
+                <div class="card">
+                    <div class="card-header">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi.svg" alt="">
+                    </div>
+                    <div class="card-body">
+                        {% if result is False %}
+                            <div class="alert alert-danger text-center">
+                                we couldn't find <strong>{{ search }}</strong>
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="pokemon">Search pokemon</label>
+                            <input type="text"
+                                   id="pokemon"
+                                   name="pokemon"
+                                   placeholder="Example: Charizard"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-block btn-outline-success">
+                            search <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if result %}
+        <div class="row mt-2">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <a href="/api/pokedex/search/{{ pokemon.name }}/"
+                           class="btn btn-warning btn-sm"
+                           target="_blank">
+                            Click here to see api result <i class="fa fa-cog fa-spin"></i>
+                        </a>
+                        <a href="/docs/"
+                           class="ml-2 btn btn-info btn-sm"
+                           target="_blank">
+                            Click here to see api docs <i class="fa fa-doc fa-spin"></i>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Height</th>
+                                        <th>weight</th>
+                                        <th>Source</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ pokemon.pokemon_id }}</td>
+                                        <td>{{ pokemon.name }}</td>
+                                        <td>{{ pokemon.height }}</td>
+                                        <td>{{ pokemon.weight }}</td>
+                                        <td>
+                                            {% if fetched %}
+                                                <strong class="text-info">
+                                                    Api <i class="fa fa-cog fa-spin"></i>
+                                                </strong>
+                                            {% else %}
+                                                <strong class="text-success">
+                                                    Database <i class="fa fa-database"></i>
+                                                </strong>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="btn btn-info btn-sm" href="/admin/pokedex/pokemon/{{ pokemon.id }}/" target="_blank">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for evolution in pokemon.evolutions.all %}
+                                        <tr>
+                                            <td>{{ evolution.name }}</td>
+                                            <td>{{ evolution.evolution_type }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.pokemon_id }}.png"
+                                     class="rounded border border-warning"
+                                     width="100%"
+                                     alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+</body>
+</html>
