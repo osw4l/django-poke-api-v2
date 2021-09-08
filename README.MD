@@ -16,7 +16,7 @@ to run  the image follow the next instructions, just for local environment
 
 ## if you don't wanna see the logs of the containers, add -d after up
 
-    docker-compose up -d
+    docker-compose up
 
 
 ## give permissions for this files collectstatic.sh, migrate.sh, run_script.sh and setup.sh 
