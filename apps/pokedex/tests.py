@@ -144,6 +144,5 @@ class SearchTestCase(APITestCase):
     def test_search_fail_404_message(self):
         response = self.client.get('/api/pokedex/search/pikachu2/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        print(response.json())
         self.assertEqual(response.json(), {'error': 'the pokemon pikachu2 does not exist in the database'})
 
