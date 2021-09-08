@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.generic.edit import ProcessFormView
-
+from apps.pokedex.helpers import PokeApiV2
+from apps.utils.shortcuts import get_object_or_none
 from .models import Pokemon
 
-from apps.pokedex.helpers import PokeApiV2
-from ..utils.shortcuts import get_object_or_none
-
 poke_api = PokeApiV2()
+
 
 class SearchView(TemplateView,
                  ProcessFormView):
@@ -44,4 +43,3 @@ class SearchView(TemplateView,
     def fetch_pokemon(self):
         last = poke_api.search(self.pokemon)
         return last if last and last.name.lower() == self.pokemon.lower() else None
-
