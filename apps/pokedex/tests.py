@@ -110,14 +110,17 @@ class SearchTestCase(APITestCase):
             ],
             "evolutions": [
                 {
+                    "id": 1,
                     "name": "pichu",
                     "evolution_type": "Preevolution"
                 },
                 {
+                    "id": 2,
                     "name": "pikachu",
                     "evolution_type": "Evolution"
                 },
                 {
+                    "id": 3,
                     "name": "raichu",
                     "evolution_type": "Evolution"
                 }

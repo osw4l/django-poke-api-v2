@@ -6,6 +6,7 @@ class EvolutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Evolution
         fields = (
+            'id',
             'name',
             'evolution_type'
         )
