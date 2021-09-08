@@ -93,7 +93,7 @@ class PokeApi(Api):
                 purple('Navigating for the next page'),
                 red(response.get('next'))
             ))
-            # self.send_paginated_request(url=response.get('next'))
+            self.send_paginated_request(url=response.get('next'))
 
     def process_evolution_chain(self, chain):
         species = chain.get('species')
