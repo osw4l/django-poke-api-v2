@@ -18,5 +18,3 @@ class Command(BaseCommand):
 
         api = PokeApi()
         api.get_pokemons()
-        print(red('Error -> the process was interrupted because the remote server refused the connection'))
-

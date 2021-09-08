@@ -76,25 +76,24 @@ class PokeApi(Api):
         print('Sending first request to : {}'.format(
             cyan(self.start_url)
         ))
+
         self.send_paginated_request(url=self.start_url)
         self.process_insert()
+        self.pokemon_evolutions.clear()
 
     def send_paginated_request(self, url):
-        try:
-            response = super().send_request(url=url)
+        response = super().send_request(url=url)
 
-            for result in response.get('results'):
-                poke = self.retrieve_pokemon(url=result.get('url'))
-                self.pokemons.append(poke)
+        for result in response.get('results'):
+            poke = self.retrieve_pokemon(url=result.get('url'))
+            self.pokemons.append(poke)
 
-            if response.get('next'):
-                print('====== >>>>>>> {} - {} <<<<<<< ======'.format(
-                    purple('Navigating for the next page'),
-                    red(response.get('next'))
-                ))
-                self.send_paginated_request(url=response.get('next'))
-        except:
-            print(red('Error -> the process was interrupted because the remote server refused the connection'))
+        if response.get('next'):
+            print('====== >>>>>>> {} - {} <<<<<<< ======'.format(
+                purple('Navigating for the next page'),
+                red(response.get('next'))
+            ))
+            # self.send_paginated_request(url=response.get('next'))
 
     def process_evolution_chain(self, chain):
         species = chain.get('species')
@@ -182,19 +181,16 @@ class PokeApiV2(PokeApi):
         return result
 
     def send_paginated_request(self, url):
-        try:
-            response = super().send_request(url=url)
-            for result in response.get('results'):
-                if result.get('name').lower() == self.pokemon:
-                    poke = super().retrieve_pokemon(url=result.get('url'))
-                    self.pokemons.append(poke)
-                    return
+        response = super().send_request(url=url)
+        for result in response.get('results'):
+            if result.get('name').lower() == self.pokemon:
+                poke = super().retrieve_pokemon(url=result.get('url'))
+                self.pokemons.append(poke)
+                return
 
-            if response.get('next'):
-                print('====== >>>>>>> {} - {} <<<<<<< ======'.format(
-                    purple('Navigating for the next page'),
-                    red(response.get('next'))
-                ))
-                self.send_paginated_request(url=response.get('next'))
-        except:
-            print(red('Error -> the process was interrupted because the remote server refused the connection'))
+        if response.get('next'):
+            print('====== >>>>>>> {} - {} <<<<<<< ======'.format(
+                purple('Navigating for the next page'),
+                red(response.get('next'))
+            ))
+            self.send_paginated_request(url=response.get('next'))

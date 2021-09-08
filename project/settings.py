@@ -188,3 +188,5 @@ else:
     }
 
 LOGIN_URL = '/admin/login/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

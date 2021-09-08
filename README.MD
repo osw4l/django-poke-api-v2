@@ -18,29 +18,12 @@ to run  the image follow the next instructions, just for local environment
 
     docker-compose up -d
 
-## if you see something like this, just wait, the database is still starting 
-
-![enter image description here](https://i.imgur.com/p2mJwLm.png)
-    
 
 ## give permissions for this files collectstatic.sh, migrate.sh, run_script.sh and setup.sh 
 
-    chmod +x collectstatic.sh && chmod +x migrate.sh && chmod +x run_script.sh && chmod +x setup.sh 
+    chmod +x poke.sh && chmod +x poke_all.sh && chmod +x setup.sh && chmod +x test.sh 
 
 ## to setup the project, create database, make initial migrations, create superuser and fill the database just run
-
-    ./setup.sh
-
-## If you see some error like this, don't worry, the database is not ready yet
-
-![enter image description here](https://i.imgur.com/EwhzFye.png)
-
-## Just wait and see the console until see this 
-
-![enter image description here](https://i.imgur.com/4WA0TFa.png)
-
-
-## And try to run setup again
 
     ./setup.sh
 
