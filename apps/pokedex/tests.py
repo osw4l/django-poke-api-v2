@@ -131,16 +131,12 @@ class SearchTestCase(APITestCase):
         response = self.client.get('/api/pokedex/search/pikachu/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_search_get_pokemon_ok(self):
-        response = self.client.get('/api/pokedex/search/pikachu/')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
     def test_search_get_pokemon_data_ok(self):
         response = self.client.get('/api/pokedex/search/pikachu/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), self.pokemon)
 
-    def test_search_fail(self):
+    def test_search_fail_404(self):
         response = self.client.get('/api/pokedex/search/pikachu2/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
